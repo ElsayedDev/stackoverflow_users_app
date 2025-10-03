@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stackoverflow_users_app/features/users/domain/repositories/users_repo.dart';
+import 'package:stackoverflow_users_app/core/di/service_locator.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/cubit/reputation_cubit.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/cubit/users_cubit.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/cubit/users_state.dart';
@@ -270,10 +270,7 @@ class _UsersScreenState extends State<UsersScreen> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (routeContext) => BlocProvider(
-          create: (_) => ReputationCubit(
-            RepositoryProvider.of<UsersRepository>(routeContext),
-            userId: id,
-          ),
+          create: (_) => sl<ReputationCubit>(param1: id),
           child: UserReputationScreen(
             userId: id,
             userName: name,

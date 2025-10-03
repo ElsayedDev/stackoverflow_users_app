@@ -263,7 +263,6 @@ class _UsersPageState extends State<UsersPage> {
         builder: (routeContext) => BlocProvider(
           create: (_) => ReputationCubit(
             RepositoryProvider.of<UsersRepository>(routeContext),
-            userId: id,
           ),
           child: UserReputationScreen(
             userId: id,

@@ -4,11 +4,11 @@ import 'package:stackoverflow_users_app/features/users/domain/repositories/users
 import 'package:stackoverflow_users_app/features/users/presentation/cubit/reputation_state.dart';
 
 class ReputationCubit extends Cubit<ReputationState> {
-  ReputationCubit(this._repository, {required this.userId})
-      : super(const ReputationState());
-
   final UsersRepository _repository;
-  final int userId;
+
+  ReputationCubit(this._repository) : super(const ReputationState());
+
+  final int userId = 0;
 
   int _currentPage = 0;
   bool _isFetching = false;

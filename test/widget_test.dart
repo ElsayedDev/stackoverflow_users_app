@@ -6,12 +6,16 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:stackoverflow_users_app/core/di/service_locator.dart';
 import 'package:stackoverflow_users_app/main.dart';
 
 void main() {
+  setUp(() {
+    initServiceLocator();
+  });
+
   testWidgets('renders paginated users list', (tester) async {
-    await tester.pumpWidget(MyApp());
+    await tester.pumpWidget(const MyApp());
 
     // Allow the initial load trigger to schedule.
     await tester.pump();
