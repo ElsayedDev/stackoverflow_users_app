@@ -1,0 +1,15 @@
+<resources>
+    <color name="sofOrange">#F48024</color>
+    <color name="sofBlue">#0077CC</color>
+    <color name="sofText">#0C0D0E</color>
+    <color name="sofMuted">#3B4045</color>
+    <color name="sofBorder">#D6D9DC</color>
+    <color name="sofBg">#F8F9F9</color>
+    <color name="sofTagBg">#E1ECF4</color>
+    <color name="sofTagText">#39739D</color>
+    <color name="sofSuccess">#127A2A</color>
+    <color name="sofDanger">#C92A2A</color>
+    <color name="sofBadgeGold">#FFCC01</color>
+    <color name="sofBadgeSilver">#B4B8BC</color>
+    <color name="sofBadgeBronze">#CC9966</color>
+</resources>

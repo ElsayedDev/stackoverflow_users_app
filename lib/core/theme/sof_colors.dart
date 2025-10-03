@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:stackoverflow_users_app/gen/colors.gen.dart';
 
+@Deprecated('Use ColorName.* constants from lib/gen/colors.gen.dart instead.')
 abstract class SOFColors {
-  static const Color orange = Color(0xFFF48024);
-  static const Color blue = Color(0xFF0077CC);
-  static const Color text = Color(0xFF0C0D0E);
-  static const Color muted = Color(0xFF3B4045);
-  static const Color border = Color(0xFFD6D9DC);
-  static const Color bg = Color(0xFFF8F9F9);
-  static const Color tagBg = Color(0xFFE1ECF4);
-  static const Color tagText = Color(0xFF39739D);
+  static const Color orange = ColorName.sofOrange;
+  static const Color blue = ColorName.sofBlue;
+  static const Color text = ColorName.sofText;
+  static const Color muted = ColorName.sofMuted;
+  static const Color border = ColorName.sofBorder;
+  static const Color bg = ColorName.sofBg;
+  static const Color tagBg = ColorName.sofTagBg;
+  static const Color tagText = ColorName.sofTagText;
 
-  static const Color badgeGold = Color(0xFFFFCC01);
-  static const Color badgeSilver = Color(0xFFB4B8BC);
-  static const Color badgeBronze = Color(0xFFCC9966);
+  static const Color success = ColorName.sofSuccess;
+  static const Color danger = ColorName.sofDanger;
+
+  static const Color badgeGold = ColorName.sofBadgeGold;
+  static const Color badgeSilver = ColorName.sofBadgeSilver;
+  static const Color badgeBronze = ColorName.sofBadgeBronze;
 }
