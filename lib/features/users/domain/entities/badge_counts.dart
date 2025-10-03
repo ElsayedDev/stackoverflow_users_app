@@ -3,5 +3,6 @@ class BadgeCounts {
   final int silver;
   final int gold;
 
-  const BadgeCounts({required this.bronze , required this.silver , required this.gold });
+  const BadgeCounts(
+      {required this.bronze, required this.silver, required this.gold});
 }
