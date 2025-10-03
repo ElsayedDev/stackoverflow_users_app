@@ -21,8 +21,11 @@ UsersResponse _$UsersResponseFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$UsersResponse {
   List<UserModel> get items => throw _privateConstructorUsedError;
+  @JsonKey(name: 'has_more')
   bool get hasMore => throw _privateConstructorUsedError;
+  @JsonKey(name: 'quota_max')
   int get quotaMax => throw _privateConstructorUsedError;
+  @JsonKey(name: 'quota_remaining')
   int get quotaRemaining => throw _privateConstructorUsedError;
 
   /// Serializes this UsersResponse to a JSON map.
@@ -42,7 +45,10 @@ abstract class $UsersResponseCopyWith<$Res> {
       _$UsersResponseCopyWithImpl<$Res, UsersResponse>;
   @useResult
   $Res call(
-      {List<UserModel> items, bool hasMore, int quotaMax, int quotaRemaining});
+      {List<UserModel> items,
+      @JsonKey(name: 'has_more') bool hasMore,
+      @JsonKey(name: 'quota_max') int quotaMax,
+      @JsonKey(name: 'quota_remaining') int quotaRemaining});
 }
 
 /// @nodoc
@@ -95,7 +101,10 @@ abstract class _$$UsersResponseImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<UserModel> items, bool hasMore, int quotaMax, int quotaRemaining});
+      {List<UserModel> items,
+      @JsonKey(name: 'has_more') bool hasMore,
+      @JsonKey(name: 'quota_max') int quotaMax,
+      @JsonKey(name: 'quota_remaining') int quotaRemaining});
 }
 
 /// @nodoc
@@ -142,9 +151,9 @@ class __$$UsersResponseImplCopyWithImpl<$Res>
 class _$UsersResponseImpl implements _UsersResponse {
   const _$UsersResponseImpl(
       {required final List<UserModel> items,
-      required this.hasMore,
-      required this.quotaMax,
-      required this.quotaRemaining})
+      @JsonKey(name: 'has_more') required this.hasMore,
+      @JsonKey(name: 'quota_max') required this.quotaMax,
+      @JsonKey(name: 'quota_remaining') required this.quotaRemaining})
       : _items = items;
 
   factory _$UsersResponseImpl.fromJson(Map<String, dynamic> json) =>
@@ -159,10 +168,13 @@ class _$UsersResponseImpl implements _UsersResponse {
   }
 
   @override
+  @JsonKey(name: 'has_more')
   final bool hasMore;
   @override
+  @JsonKey(name: 'quota_max')
   final int quotaMax;
   @override
+  @JsonKey(name: 'quota_remaining')
   final int quotaRemaining;
 
   @override
@@ -211,8 +223,9 @@ class _$UsersResponseImpl implements _UsersResponse {
 abstract class _UsersResponse implements UsersResponse {
   const factory _UsersResponse(
       {required final List<UserModel> items,
-      required final bool hasMore,
-      required final int quotaMax,
+      @JsonKey(name: 'has_more') required final bool hasMore,
+      @JsonKey(name: 'quota_max') required final int quotaMax,
+      @JsonKey(name: 'quota_remaining')
       required final int quotaRemaining}) = _$UsersResponseImpl;
 
   factory _UsersResponse.fromJson(Map<String, dynamic> json) =
@@ -221,10 +234,13 @@ abstract class _UsersResponse implements UsersResponse {
   @override
   List<UserModel> get items;
   @override
+  @JsonKey(name: 'has_more')
   bool get hasMore;
   @override
+  @JsonKey(name: 'quota_max')
   int get quotaMax;
   @override
+  @JsonKey(name: 'quota_remaining')
   int get quotaRemaining;
 
   /// Create a copy of UsersResponse

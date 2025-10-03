@@ -5,13 +5,37 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hive/hive.dart';
 import 'package:stackoverflow_users_app/core/di/service_locator.dart';
+import 'package:stackoverflow_users_app/features/users/data/repositories/mock_users_repository.dart';
 import 'package:stackoverflow_users_app/main.dart';
 
 void main() {
-  setUp(() {
-    initServiceLocator();
+  late Directory hiveDir;
+
+  setUpAll(() async {
+    hiveDir = await Directory.systemTemp.createTemp();
+    Hive.init(hiveDir.path);
+  });
+
+  tearDownAll(() async {
+    await Hive.close();
+    await Hive.deleteFromDisk();
+    if (hiveDir.existsSync()) {
+      await hiveDir.delete(recursive: true);
+    }
+  });
+
+  tearDown(() async {
+    await Hive.close();
+    await Hive.deleteFromDisk();
+  });
+
+  setUp(() async {
+    await initServiceLocator(usersRepository: MockUsersRepository());
   });
 
   testWidgets('renders paginated users list', (tester) async {

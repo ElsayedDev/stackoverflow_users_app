@@ -1,5 +1,7 @@
-import 'package:stackoverflow_users_app/features/users/domain/entities/reputation_history_type.dart';
 import 'package:stackoverflow_users_app/features/users/data/models/reputation_history_type_model.dart';
+import 'package:stackoverflow_users_app/features/users/data/models/reputation_item_model.dart';
+import 'package:stackoverflow_users_app/features/users/domain/entities/reputation_entity.dart';
+import 'package:stackoverflow_users_app/features/users/domain/entities/reputation_history_type.dart';
 
 extension ReputationHistoryTypeMapper on ReputationHistoryTypeModel {
   ReputationHistoryType toEntity() => switch (this) {
@@ -65,4 +67,13 @@ extension ReputationHistoryTypeMapper on ReputationHistoryTypeModel {
           ReputationHistoryType.suggestedEditApprovalOverridden,
         ReputationHistoryTypeModel.unknown => ReputationHistoryType.unknown
       };
+}
+
+extension ReputationItemMapper on ReputationItemModel {
+  ReputationEntity toEntity() => ReputationEntity(
+        type: reputationHistoryType.toEntity(),
+        change: reputationChange,
+        postId: postId,
+        createdAt: DateTime.fromMillisecondsSinceEpoch(creationDate * 1000),
+      );
 }

@@ -8,9 +8,9 @@ part 'users_response.g.dart';
 class UsersResponse with _$UsersResponse {
   const factory UsersResponse({
     required List<UserModel> items,
-    required bool hasMore,
-    required int quotaMax,
-    required int quotaRemaining,
+    @JsonKey(name: 'has_more') required bool hasMore,
+    @JsonKey(name: 'quota_max') required int quotaMax,
+    @JsonKey(name: 'quota_remaining') required int quotaRemaining,
   }) = _UsersResponse;
 
   factory UsersResponse.fromJson(Map<String, dynamic> json) =>
