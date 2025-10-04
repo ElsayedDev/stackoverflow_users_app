@@ -1,62 +1,20 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:stackoverflow_users_app/core/di/service_locator.dart';
-import 'package:stackoverflow_users_app/core/routes/app_routes.dart';
-import 'package:stackoverflow_users_app/core/routes/app_router.dart';
-import 'package:stackoverflow_users_app/core/theme/soft_theme.dart';
-import 'package:stackoverflow_users_app/features/users/domain/repositories/users_repo.dart';
-import 'package:stackoverflow_users_app/features/users/presentation/cubit/bookmarks/bookmarks_cubit.dart';
-import 'package:stackoverflow_users_app/features/users/presentation/cubit/home/home_cubit.dart';
-import 'package:stackoverflow_users_app/features/users/presentation/cubit/users/users_cubit.dart';
-import 'package:stackoverflow_users_app/features/users/presentation/screens/home_screen.dart';
+
+import 'package:stackoverflow_users_app/core/bootstrap/bootstrap.dart';
+import 'package:stackoverflow_users_app/my_app.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
-  await initServiceLocator();
-  runApp(const MyApp());
-}
+  // Catch uncaught async errors (e.g., from isolates)
+  runZonedGuarded(() async {
+    FlutterError.onError = (details) {
+      FlutterError.dumpErrorToConsole(details);
+      // TODO(next-enhancement): send to crash reporter if needed
+    };
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) => ScreenUtilInit(
-        designSize: const Size(390, 844),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        builder: (context, _) {
-          return MultiRepositoryProvider(
-            providers: [
-              RepositoryProvider<UsersRepository>.value(
-                value: sl<UsersRepository>(),
-              ),
-            ],
-            child: MultiBlocProvider(
-              providers: [
-                BlocProvider<HomeCubit>(
-                  create: (context) => sl<HomeCubit>(),
-                ),
-                BlocProvider<UsersCubit>(
-                  create: (context) => sl<UsersCubit>(),
-                ),
-                BlocProvider<BookmarksCubit>(
-                  create: (context) => sl<BookmarksCubit>(),
-                ),
-              ],
-              child: MaterialApp(
-                debugShowCheckedModeBanner: false,
-                title: 'StackOverflow Users',
-                // TODO(next-enhance): Add dark theme support aligned with SOF design.
-                theme: SOFTheme.light,
-                initialRoute: AppRoutes.home,
-                onGenerateRoute: AppRouter.onGenerateRoute,
-              ),
-            ),
-          );
-        },
-        child: const HomeScreen(),
-      );
+    await bootstrap();
+    runApp(const MyApp());
+  }, (error, stack) {
+    // TODO(next-enhancement): send to crash reporter
+  });
 }
