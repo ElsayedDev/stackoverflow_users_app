@@ -1,0 +1,1 @@
+enum HomeFilterOption { all, bookmarked }

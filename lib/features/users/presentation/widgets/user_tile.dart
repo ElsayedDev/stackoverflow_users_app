@@ -1,9 +1,20 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stackoverflow_users_app/core/widgets/animated_scaling_button.dart';
+import 'package:stackoverflow_users_app/features/users/presentation/widgets/avatar_placeholder.dart';
+import 'package:stackoverflow_users_app/features/users/presentation/widgets/badge_dot.dart';
 import 'package:stackoverflow_users_app/gen/colors.gen.dart';
 
 class UserTile extends StatelessWidget {
+  final String avatarUrl;
+  final String name;
+  final int reputation;
+  final (int gold, int silver, int bronze) badges;
+  final bool bookmarked;
+  final VoidCallback onTap;
+  final VoidCallback onToggleBookmark;
+
   const UserTile({
     super.key,
     required this.avatarUrl,
@@ -15,16 +26,6 @@ class UserTile extends StatelessWidget {
     required this.onToggleBookmark,
   });
 
-  final String avatarUrl;
-  final String name;
-  final int reputation;
-  final (int gold, int silver, int bronze) badges;
-  final bool bookmarked;
-  final VoidCallback onTap;
-  final VoidCallback onToggleBookmark;
-
-  String _k(int n) => n.toString(); // replace with NumberFormat if you want
-
   @override
   Widget build(BuildContext context) {
     final t = Theme.of(context).textTheme;
@@ -33,8 +34,10 @@ class UserTile extends StatelessWidget {
       scale: 0.98,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 8.r, vertical: 8.r),
-        decoration: const BoxDecoration(
-          color: Colors.white,
+        decoration: BoxDecoration(
+          color: bookmarked
+              ? ColorName.sofOrange.withValues(alpha: 0.1)
+              : Colors.white,
         ),
         child: Row(
           spacing: 12.r,
@@ -42,18 +45,16 @@ class UserTile extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(4.r),
-              child: Image.network(
-                avatarUrl,
+              child: CachedNetworkImage(
+                imageUrl: avatarUrl,
                 width: 48.r,
                 height: 48.r,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  width: 48.r,
-                  height: 48.r,
-                  color: ColorName.sofBorder,
-                  alignment: Alignment.center,
-                  child: const Icon(Icons.person, color: ColorName.sofMuted),
-                ),
+                fadeInDuration: Duration.zero,
+                fadeOutDuration: Duration.zero,
+                placeholder: (context, url) => AvatarPlaceholder(size: 48.r),
+                errorWidget: (context, url, error) =>
+                    AvatarPlaceholder(size: 48.r),
               ),
             ),
             Expanded(
@@ -76,17 +77,17 @@ class UserTile extends StatelessWidget {
                             t.bodyMedium?.copyWith(color: ColorName.sofMuted),
                       ),
                       8.horizontalSpace,
-                      _BadgeDot(
+                      BadgeDot(
                         color: ColorName.sofBadgeGold,
                         count: badges.$1,
                       ),
                       6.horizontalSpace,
-                      _BadgeDot(
+                      BadgeDot(
                         color: ColorName.sofBadgeSilver,
                         count: badges.$2,
                       ),
                       6.horizontalSpace,
-                      _BadgeDot(
+                      BadgeDot(
                         color: ColorName.sofBadgeBronze,
                         count: badges.$3,
                       ),
@@ -108,24 +109,7 @@ class UserTile extends StatelessWidget {
       ),
     );
   }
-}
 
-class _BadgeDot extends StatelessWidget {
-  const _BadgeDot({required this.color, required this.count});
-  final Color color;
-  final int count;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-            width: 8.r,
-            height: 8.r,
-            decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
-        SizedBox(width: 4.w),
-        Text('$count', style: Theme.of(context).textTheme.bodySmall),
-      ],
-    );
-  }
+  // ---------------------- Private ----------------------
+  String _k(int n) => n.toString(); // replace with NumberFormat if you want
 }

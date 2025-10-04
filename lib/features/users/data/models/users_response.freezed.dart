@@ -23,10 +23,6 @@ mixin _$UsersResponse {
   List<UserModel> get items => throw _privateConstructorUsedError;
   @JsonKey(name: 'has_more')
   bool get hasMore => throw _privateConstructorUsedError;
-  @JsonKey(name: 'quota_max')
-  int get quotaMax => throw _privateConstructorUsedError;
-  @JsonKey(name: 'quota_remaining')
-  int get quotaRemaining => throw _privateConstructorUsedError;
 
   /// Serializes this UsersResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,11 +40,7 @@ abstract class $UsersResponseCopyWith<$Res> {
           UsersResponse value, $Res Function(UsersResponse) then) =
       _$UsersResponseCopyWithImpl<$Res, UsersResponse>;
   @useResult
-  $Res call(
-      {List<UserModel> items,
-      @JsonKey(name: 'has_more') bool hasMore,
-      @JsonKey(name: 'quota_max') int quotaMax,
-      @JsonKey(name: 'quota_remaining') int quotaRemaining});
+  $Res call({List<UserModel> items, @JsonKey(name: 'has_more') bool hasMore});
 }
 
 /// @nodoc
@@ -68,8 +60,6 @@ class _$UsersResponseCopyWithImpl<$Res, $Val extends UsersResponse>
   $Res call({
     Object? items = null,
     Object? hasMore = null,
-    Object? quotaMax = null,
-    Object? quotaRemaining = null,
   }) {
     return _then(_value.copyWith(
       items: null == items
@@ -80,14 +70,6 @@ class _$UsersResponseCopyWithImpl<$Res, $Val extends UsersResponse>
           ? _value.hasMore
           : hasMore // ignore: cast_nullable_to_non_nullable
               as bool,
-      quotaMax: null == quotaMax
-          ? _value.quotaMax
-          : quotaMax // ignore: cast_nullable_to_non_nullable
-              as int,
-      quotaRemaining: null == quotaRemaining
-          ? _value.quotaRemaining
-          : quotaRemaining // ignore: cast_nullable_to_non_nullable
-              as int,
     ) as $Val);
   }
 }
@@ -100,11 +82,7 @@ abstract class _$$UsersResponseImplCopyWith<$Res>
       __$$UsersResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {List<UserModel> items,
-      @JsonKey(name: 'has_more') bool hasMore,
-      @JsonKey(name: 'quota_max') int quotaMax,
-      @JsonKey(name: 'quota_remaining') int quotaRemaining});
+  $Res call({List<UserModel> items, @JsonKey(name: 'has_more') bool hasMore});
 }
 
 /// @nodoc
@@ -122,8 +100,6 @@ class __$$UsersResponseImplCopyWithImpl<$Res>
   $Res call({
     Object? items = null,
     Object? hasMore = null,
-    Object? quotaMax = null,
-    Object? quotaRemaining = null,
   }) {
     return _then(_$UsersResponseImpl(
       items: null == items
@@ -134,14 +110,6 @@ class __$$UsersResponseImplCopyWithImpl<$Res>
           ? _value.hasMore
           : hasMore // ignore: cast_nullable_to_non_nullable
               as bool,
-      quotaMax: null == quotaMax
-          ? _value.quotaMax
-          : quotaMax // ignore: cast_nullable_to_non_nullable
-              as int,
-      quotaRemaining: null == quotaRemaining
-          ? _value.quotaRemaining
-          : quotaRemaining // ignore: cast_nullable_to_non_nullable
-              as int,
     ));
   }
 }
@@ -151,9 +119,7 @@ class __$$UsersResponseImplCopyWithImpl<$Res>
 class _$UsersResponseImpl implements _UsersResponse {
   const _$UsersResponseImpl(
       {required final List<UserModel> items,
-      @JsonKey(name: 'has_more') required this.hasMore,
-      @JsonKey(name: 'quota_max') required this.quotaMax,
-      @JsonKey(name: 'quota_remaining') required this.quotaRemaining})
+      @JsonKey(name: 'has_more') required this.hasMore})
       : _items = items;
 
   factory _$UsersResponseImpl.fromJson(Map<String, dynamic> json) =>
@@ -170,16 +136,10 @@ class _$UsersResponseImpl implements _UsersResponse {
   @override
   @JsonKey(name: 'has_more')
   final bool hasMore;
-  @override
-  @JsonKey(name: 'quota_max')
-  final int quotaMax;
-  @override
-  @JsonKey(name: 'quota_remaining')
-  final int quotaRemaining;
 
   @override
   String toString() {
-    return 'UsersResponse(items: $items, hasMore: $hasMore, quotaMax: $quotaMax, quotaRemaining: $quotaRemaining)';
+    return 'UsersResponse(items: $items, hasMore: $hasMore)';
   }
 
   @override
@@ -188,21 +148,13 @@ class _$UsersResponseImpl implements _UsersResponse {
         (other.runtimeType == runtimeType &&
             other is _$UsersResponseImpl &&
             const DeepCollectionEquality().equals(other._items, _items) &&
-            (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
-            (identical(other.quotaMax, quotaMax) ||
-                other.quotaMax == quotaMax) &&
-            (identical(other.quotaRemaining, quotaRemaining) ||
-                other.quotaRemaining == quotaRemaining));
+            (identical(other.hasMore, hasMore) || other.hasMore == hasMore));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_items),
-      hasMore,
-      quotaMax,
-      quotaRemaining);
+      runtimeType, const DeepCollectionEquality().hash(_items), hasMore);
 
   /// Create a copy of UsersResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -222,11 +174,9 @@ class _$UsersResponseImpl implements _UsersResponse {
 
 abstract class _UsersResponse implements UsersResponse {
   const factory _UsersResponse(
-      {required final List<UserModel> items,
-      @JsonKey(name: 'has_more') required final bool hasMore,
-      @JsonKey(name: 'quota_max') required final int quotaMax,
-      @JsonKey(name: 'quota_remaining')
-      required final int quotaRemaining}) = _$UsersResponseImpl;
+          {required final List<UserModel> items,
+          @JsonKey(name: 'has_more') required final bool hasMore}) =
+      _$UsersResponseImpl;
 
   factory _UsersResponse.fromJson(Map<String, dynamic> json) =
       _$UsersResponseImpl.fromJson;
@@ -236,12 +186,6 @@ abstract class _UsersResponse implements UsersResponse {
   @override
   @JsonKey(name: 'has_more')
   bool get hasMore;
-  @override
-  @JsonKey(name: 'quota_max')
-  int get quotaMax;
-  @override
-  @JsonKey(name: 'quota_remaining')
-  int get quotaRemaining;
 
   /// Create a copy of UsersResponse
   /// with the given fields replaced by the non-null parameter values.

@@ -6,24 +6,13 @@ import 'package:stackoverflow_users_app/features/users/domain/entities/reputatio
 import 'package:stackoverflow_users_app/features/users/presentation/extensions/reputation_history_type_extension.dart';
 
 class ReputationTile extends StatelessWidget {
+  final ReputationEntity item;
+  final VoidCallback onPostOpened;
   const ReputationTile({
     super.key,
     required this.item,
-    required this.onOpenPost,
+    required this.onPostOpened,
   });
-
-  final ReputationEntity item;
-  final VoidCallback onOpenPost;
-
-  static final DateFormat _dateFormat = DateFormat('MMM d, yyyy • HH:mm');
-
-  String get _changeText {
-    final change = item.change;
-    final prefix = change > 0 ? '+' : '';
-    return '$prefix$change';
-  }
-
-  bool get _isPositive => item.change >= 0 || item.type.isPositive;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +21,7 @@ class ReputationTile extends StatelessWidget {
         _isPositive ? ColorName.sofSuccess : ColorName.sofDanger;
 
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16.r, vertical: 8.r),
+      margin: EdgeInsets.symmetric(vertical: 8.r),
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -81,12 +70,13 @@ class ReputationTile extends StatelessWidget {
                 ),
                 SizedBox(height: 8.h),
                 InkWell(
-                  onTap: onOpenPost,
+                  onTap: onPostOpened,
                   borderRadius: BorderRadius.circular(4.r),
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 2.h),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
+                      spacing: 4.w,
                       children: [
                         Text(
                           'Post #${item.postId}',
@@ -95,7 +85,6 @@ class ReputationTile extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        SizedBox(width: 4.w),
                         Icon(
                           Icons.open_in_new,
                           size: 14.sp,
@@ -112,4 +101,15 @@ class ReputationTile extends StatelessWidget {
       ),
     );
   }
+
+  // ---------------------- Private ----------------------
+  static final DateFormat _dateFormat = DateFormat('MMM d, yyyy • HH:mm');
+
+  String get _changeText {
+    final change = item.change;
+    final prefix = change > 0 ? '+' : '';
+    return '$prefix$change';
+  }
+
+  bool get _isPositive => item.change >= 0 || item.type.isPositive;
 }

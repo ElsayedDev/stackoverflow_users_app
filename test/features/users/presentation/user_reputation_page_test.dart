@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:stackoverflow_users_app/features/users/data/repositories/mock_users_repository.dart';
-import 'package:stackoverflow_users_app/features/users/domain/repositories/users_repo.dart';
-import 'package:stackoverflow_users_app/features/users/presentation/cubit/reputation_cubit.dart';
-import 'package:stackoverflow_users_app/features/users/presentation/screens/user_reputation_screen.dart';
+import 'package:stackoverflow_users_app/features/users/domain/usecases/get_reputation.dart';
+import 'package:stackoverflow_users_app/features/users/domain/usecases/get_user_by_id.dart';
+import 'package:stackoverflow_users_app/features/users/presentation/cubit/reputation/reputation_cubit.dart';
+import 'package:stackoverflow_users_app/features/users/presentation/views/user_reputation_view.dart';
 
 void main() {
   group('UserReputationPage', () {
@@ -15,16 +16,13 @@ void main() {
       await tester.pumpWidget(
         ScreenUtilInit(
           designSize: const Size(390, 844),
-          builder: (_, __) => RepositoryProvider<UsersRepository>.value(
-            value: repository,
-            child: BlocProvider<ReputationCubit>(
-              create: (_) => ReputationCubit(repository, userId: 1),
-              child: const MaterialApp(
-                home: UserReputationScreen(
-                  userId: 1,
-                  userName: 'User 001',
-                ),
-              ),
+          builder: (_, __) => BlocProvider<ReputationCubit>(
+            create: (_) => ReputationCubit(
+              GetReputation(repository),
+              GetUserById(repository),
+            )..onInit(1),
+            child: MaterialApp(
+              home: UserReputationView(),
             ),
           ),
         ),
@@ -33,7 +31,7 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 400));
 
-      expect(find.text("User 001's reputation"), findsOneWidget);
+      expect(find.text('User 001'), findsAtLeastNWidgets(1));
       expect(find.text('Post #1001'), findsOneWidget);
     });
   });
