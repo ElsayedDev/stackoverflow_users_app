@@ -28,6 +28,8 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        // Patrol Android runner
+        testInstrumentationRunner "pl.leancode.patrol.PatrolJUnitRunner"
     }
 
     buildTypes {
@@ -37,8 +39,23 @@ android {
             signingConfig = signingConfigs.debug
         }
     }
+
+    testOptions {
+        execution = "ANDROIDX_TEST_ORCHESTRATOR"
+    }
 }
 
 flutter {
     source = "../.."
 }
+
+dependencies {
+    // Patrol Android instrumentation APIs and AndroidX test runner
+    androidTestImplementation project(":patrol")
+    // Align with Patrol's transitive dependency (runner 1.5.1) to avoid version conflicts
+    androidTestImplementation "androidx.test:runner:1.5.1"
+    androidTestImplementation "androidx.test.ext:junit:1.1.5"
+    androidTestUtil("androidx.test:orchestrator:1.5.1")
+}
+
+ 

@@ -12,6 +12,7 @@ class UserReputationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => UserReputationProviders(
+        userId: args.userId,
         child: const UserReputationView(),
       );
 }

@@ -1,17 +1,13 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 import 'package:stackoverflow_users_app/core/di/service_locator.dart';
 import 'package:stackoverflow_users_app/features/users/data/repositories/mock_users_repository.dart';
-import 'package:stackoverflow_users_app/my_app.dart';
+import 'package:stackoverflow_users_app/features/users/presentation/providers/home_providers.dart';
+import 'package:stackoverflow_users_app/features/users/presentation/views/home_view.dart';
 
 void main() {
   late Directory hiveDir;
@@ -38,28 +34,36 @@ void main() {
     await initServiceLocator(usersRepository: MockUsersRepository());
   });
 
-  testWidgets('renders paginated users list', (tester) async {
-    await tester.pumpWidget(const MyApp());
+  testWidgets('HomeView shows tabs and loads users, filters to Bookmarked',
+      (tester) async {
+    await tester.pumpWidget(
+      ScreenUtilInit(
+        designSize: const Size(390, 844),
+        builder: (_, __) => MaterialApp(
+          home: HomeProviders(child: HomeView()),
+        ),
+      ),
+    );
 
-    // Allow the initial load trigger to schedule.
+    // Allow init microtasks and mocked delays
     await tester.pump();
-    // Wait for the mock repository delay to resolve.
     await tester.pump(const Duration(milliseconds: 400));
 
     expect(find.text('Stack Overflow Users'), findsOneWidget);
-    expect(find.text('User 001'), findsOneWidget);
-    expect(find.text('Bookmarked'), findsOneWidget);
     expect(find.text('All'), findsOneWidget);
+    expect(find.text('Bookmarked'), findsOneWidget);
 
+    // Users list should render at least first user
+    expect(find.text('User 001'), findsOneWidget);
+
+    // Switch to Bookmarked -> empty state by default
     await tester.tap(find.text('Bookmarked'));
     await tester.pumpAndSettle();
-
-    // Bookmarked tab empty state message
     expect(find.textContaining('No users found.'), findsOneWidget);
 
+    // Switch back to All -> still shows users
     await tester.tap(find.text('All'));
     await tester.pumpAndSettle();
-
     expect(find.text('User 001'), findsOneWidget);
   });
 }
