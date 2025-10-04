@@ -16,5 +16,5 @@ Future<void> bootstrap() async {
   await Hive.initFlutter(); // Only framework-level init here
   await initServiceLocator(); // Register singletons + open Hive boxes here if you do that inside DI
 
-  await dotenv.load(fileName: ".env");
+  await dotenv.load();
 }

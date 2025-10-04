@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stackoverflow_users_app/core/widgets/loading_center.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/cubit/bookmarks/bookmarks_cubit.dart';
-import 'package:stackoverflow_users_app/l10n/l10n.dart';
+
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/empty_state_view.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/bookmarked_users_tab_success_view.dart';
+import 'package:stackoverflow_users_app/generated/l10n.dart';
 
 class BookmarkedUsersTab extends StatefulWidget {
   final void Function(int id) onUserTap;

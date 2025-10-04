@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/models/home_filter_option.dart';
 import 'package:stackoverflow_users_app/gen/assets.gen.dart';
-import 'package:stackoverflow_users_app/l10n/l10n.dart';
+import 'package:stackoverflow_users_app/generated/l10n.dart';
 
 class HomeAppBar extends AppBar {
   HomeAppBar({

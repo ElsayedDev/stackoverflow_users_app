@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stackoverflow_users_app/core/widgets/loading_center.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/cubit/users/users_cubit.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/empty_state_view.dart';
-import 'package:stackoverflow_users_app/l10n/l10n.dart';
+import 'package:stackoverflow_users_app/generated/l10n.dart';
+
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/users_tab_success_view.dart';
 
 class UsersTab extends StatefulWidget {

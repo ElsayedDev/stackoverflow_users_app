@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:stackoverflow_users_app/l10n/l10n.dart';
+import 'package:stackoverflow_users_app/generated/l10n.dart';
+
 import 'package:stackoverflow_users_app/core/routes/app_router.dart';
 import 'package:stackoverflow_users_app/core/routes/app_routes.dart';
 import 'package:stackoverflow_users_app/core/theme/soft_theme.dart';
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          supportedLocales: S.supportedLocales,
+          supportedLocales: S.delegate.supportedLocales,
+          locale: const Locale('en', ''),
           initialRoute: AppRoutes.home,
           onGenerateRoute: AppRouter.onGenerateRoute,
         ),

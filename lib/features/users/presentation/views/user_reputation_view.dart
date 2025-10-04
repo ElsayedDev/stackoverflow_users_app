@@ -9,7 +9,7 @@ import 'package:stackoverflow_users_app/features/users/presentation/widgets/repu
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/user_profile_header.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/user_reputation_app_bar.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/user_reputation_error_state_view.dart';
-import 'package:stackoverflow_users_app/l10n/l10n.dart';
+import 'package:stackoverflow_users_app/generated/l10n.dart';
 
 /// View = subscribes to Cubit state and builds UI.
 /// All UI helpers are extracted to widgets for clarity & reuse.

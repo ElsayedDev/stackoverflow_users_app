@@ -49,4 +49,10 @@ class SEn extends S {
 
   @override
   String get removeBookmark => 'Remove bookmark';
+
+  @override
+  String get failedToLoadUsers => 'Failed to load users.';
+
+  @override
+  String get noUsersFound => 'No users found.';
 }
