@@ -3,10 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:stackoverflow_users_app/core/di/service_locator.dart';
+import 'package:stackoverflow_users_app/core/routes/app_routes.dart';
+import 'package:stackoverflow_users_app/core/routes/app_router.dart';
 import 'package:stackoverflow_users_app/core/theme/soft_theme.dart';
 import 'package:stackoverflow_users_app/features/users/domain/repositories/users_repo.dart';
-import 'package:stackoverflow_users_app/features/users/presentation/cubit/users_cubit.dart';
-import 'package:stackoverflow_users_app/features/users/presentation/screens/users_screen.dart';
+import 'package:stackoverflow_users_app/features/users/presentation/cubit/bookmarks/bookmarks_cubit.dart';
+import 'package:stackoverflow_users_app/features/users/presentation/cubit/home/home_cubit.dart';
+import 'package:stackoverflow_users_app/features/users/presentation/cubit/users/users_cubit.dart';
+import 'package:stackoverflow_users_app/features/users/presentation/screens/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +27,7 @@ class MyApp extends StatelessWidget {
         designSize: const Size(390, 844),
         minTextAdapt: true,
         splitScreenMode: true,
-        builder: (context, child) {
+        builder: (context, _) {
           return MultiRepositoryProvider(
             providers: [
               RepositoryProvider<UsersRepository>.value(
@@ -32,8 +36,14 @@ class MyApp extends StatelessWidget {
             ],
             child: MultiBlocProvider(
               providers: [
+                BlocProvider<HomeCubit>(
+                  create: (context) => sl<HomeCubit>(),
+                ),
                 BlocProvider<UsersCubit>(
                   create: (context) => sl<UsersCubit>(),
+                ),
+                BlocProvider<BookmarksCubit>(
+                  create: (context) => sl<BookmarksCubit>(),
                 ),
               ],
               child: MaterialApp(
@@ -41,11 +51,12 @@ class MyApp extends StatelessWidget {
                 title: 'StackOverflow Users',
                 // TODO(next-enhance): Add dark theme support aligned with SOF design.
                 theme: SOFTheme.light,
-                home: child,
+                initialRoute: AppRoutes.home,
+                onGenerateRoute: AppRouter.onGenerateRoute,
               ),
             ),
           );
         },
-        child: const UsersScreen(),
+        child: const HomeScreen(),
       );
 }
