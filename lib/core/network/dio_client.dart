@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:stackoverflow_users_app/core/network/stack_exchange_key_interceptor.dart';
 
 class DioClient {
   DioClient._();
@@ -19,6 +20,9 @@ class DioClient {
     );
 
     final dio = Dio(options);
+
+    dio.interceptors
+        .add(StackExchangeKeyInterceptor("rl_RyW2piqZE5xpDYfyTtAmZzeyf"));
 
     if (kDebugMode) {
       dio.interceptors.add(
