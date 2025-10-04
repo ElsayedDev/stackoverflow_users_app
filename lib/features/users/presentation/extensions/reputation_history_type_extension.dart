@@ -12,6 +12,7 @@ extension ReputationHistoryTypeX on ReputationHistoryType {
         ReputationHistoryType.proposedChangeApproved,
       }.contains(this);
 
+  // TODO(next-enhancement): Add localization support
   String get label {
     final raw = name.replaceAllMapped(
       RegExp(r'([A-Z])'),

@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:stackoverflow_users_app/core/utils/map_extensions.dart';
 import 'package:stackoverflow_users_app/features/users/data/models/cache_user_page.dart';
+import 'package:stackoverflow_users_app/features/users/data/models/reputation_history_response.dart';
 import 'package:stackoverflow_users_app/features/users/data/models/user_model.dart';
 
 abstract class UsersLocalDataSource {
@@ -11,6 +12,11 @@ abstract class UsersLocalDataSource {
   Future<void> cacheUsersPage(CacheUserPage page);
   CacheUserPage? getCachedUsersPage(int page);
   Future<List<UserModel>> getUsersByIds(List<int> ids);
+
+  // reputation cache (per user, paginated)
+  Future<void> cacheReputationPage(
+      int userId, int page, ReputationHistoryResponse response);
+  ReputationHistoryResponse? getCachedReputationPage(int userId, int page);
 
   // single snapshot
   Future<void> upsertUserSnapshot(UserModel model);
@@ -38,6 +44,7 @@ class HiveUsersLocalDataSource implements UsersLocalDataSource {
   static const String _bookmarkKey = 'bookmark_ids';
   static String _userKey(int id) => 'user_$id';
   static String _pageKey(int page) => 'page_$page';
+  static String _repKey(int userId, int page) => 'rep_${userId}_$page';
 
   final Box<dynamic> _usersBox;
   final Box<dynamic> _bookmarksBox;
@@ -65,6 +72,31 @@ class HiveUsersLocalDataSource implements UsersLocalDataSource {
       for (final u in page.users) _userKey(u.userId): jsonEncode(u.toJson()),
     };
     await _usersBox.putAll(batch);
+  }
+
+  @override
+  Future<void> cacheReputationPage(
+      int userId, int page, ReputationHistoryResponse response) async {
+    await _usersBox.put(_repKey(userId, page), jsonEncode(response.toJson()));
+  }
+
+  @override
+  ReputationHistoryResponse? getCachedReputationPage(int userId, int page) {
+    final raw = _usersBox.get(_repKey(userId, page));
+    if (raw is String) {
+      try {
+        final decoded = jsonDecode(raw);
+        if (decoded is Map<String, dynamic>) {
+          return ReputationHistoryResponse.fromJson(decoded);
+        }
+        if (decoded is Map) {
+          return ReputationHistoryResponse.fromJson(decoded.toStringKeyedMap());
+        }
+      } catch (_) {
+        return null;
+      }
+    }
+    return null;
   }
 
   @override

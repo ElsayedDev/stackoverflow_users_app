@@ -89,6 +89,9 @@ class UsersRepositoryImpl implements UsersRepository {
         final ReputationHistoryResponse response =
             await _remote.getReputation(userId, page);
 
+        // Cache raw page for offline fallback per user
+        await _local.cacheReputationPage(userId, page, response);
+
         final entities = response.items
             .map((item) => item.toEntity())
             .toList(growable: false);
@@ -96,6 +99,19 @@ class UsersRepositoryImpl implements UsersRepository {
         return Paginated(items: entities, hasMore: response.hasMore);
       },
       tag: 'UsersRepository.getReputation',
+      onFailure: (error, stack) {
+        try {
+          final cached = _local.getCachedReputationPage(userId, page);
+          if (cached == null) return null; // no fallback
+
+          final entities = cached.items
+              .map((item) => item.toEntity())
+              .toList(growable: false);
+          return Paginated(items: entities, hasMore: cached.hasMore);
+        } catch (_) {
+          return null;
+        }
+      },
     );
   }
 

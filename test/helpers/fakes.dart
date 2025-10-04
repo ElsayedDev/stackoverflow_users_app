@@ -119,6 +119,7 @@ class FakeUsersLocalDataSource implements UsersLocalDataSource {
   final _snapshots = <int, UserModel>{};
   final _bookmarkIds = <int>{};
   final _bookmarkController = StreamController<Set<int>>.broadcast();
+  final _reputationPages = <String, ReputationHistoryResponse>{};
 
   @override
   Future<void> cacheUsersPage(CacheUserPage page) async {
@@ -163,6 +164,20 @@ class FakeUsersLocalDataSource implements UsersLocalDataSource {
   @override
   Future<void> clearUserSnapshots() async {
     _snapshots.clear();
+  }
+
+  // --- Reputation cache (per user, paginated) ---
+  String _repKey(int userId, int page) => 'rep_${userId}_$page';
+
+  @override
+  Future<void> cacheReputationPage(
+      int userId, int page, ReputationHistoryResponse response) async {
+    _reputationPages[_repKey(userId, page)] = response;
+  }
+
+  @override
+  ReputationHistoryResponse? getCachedReputationPage(int userId, int page) {
+    return _reputationPages[_repKey(userId, page)];
   }
 }
 

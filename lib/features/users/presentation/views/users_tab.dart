@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stackoverflow_users_app/core/widgets/loading_center.dart';
-import 'package:stackoverflow_users_app/core/widgets/responsive_list_view.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/cubit/users/users_cubit.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/empty_state_view.dart';
-import 'package:stackoverflow_users_app/features/users/presentation/widgets/user_tile.dart';
+import 'package:stackoverflow_users_app/l10n/l10n.dart';
+import 'package:stackoverflow_users_app/features/users/presentation/widgets/users_tab_success_view.dart';
 
 class UsersTab extends StatefulWidget {
   final void Function(int id) onUserTap;
@@ -44,56 +44,46 @@ class _UsersTabState extends State<UsersTab>
 
   @override
   Widget build(BuildContext context) {
+    // for AutomaticKeepAliveClientMixin
     super.build(context);
+
+    // Normal UI building below
     return BlocConsumer<UsersCubit, UsersState>(
       listenWhen: _listenWhen,
       listener: _handleViewListener,
       builder: (context, state) {
         final users = state.users;
 
+        // Show initial loading indicator
         if (state.showInitialLoader) {
           return const LoadingCenter();
         }
 
+        // Handle initial error state
         if (state.showInitialError) {
           return EmptyStateView(
-            message: state.error ?? 'Failed to load users.',
-            onRetry: () => context.read<UsersCubit>().onLoadInit(force: true),
+            message: state.error ?? S.current.failedToLoadUsers,
+            onRetry: _handleRetry,
             onRefresh: _handleRefresh,
           );
         }
 
+        // Show empty state if there are no users
         if (users.isEmpty && !state.isLoading) {
           return EmptyStateView(
-            message: 'No users found.',
+            message: S.current.noUsersFound,
             onRefresh: _handleRefresh,
           );
         }
 
-        return RefreshIndicator(
+        // If we reach here, we have users to show
+        return UsersTabSuccessView(
+          controller: _scrollController,
+          items: users,
+          isLoadingMore: state.isLoadingMore,
+          onUserTap: widget.onUserTap,
+          onToggleBookmark: _handleToggleBookmark,
           onRefresh: _handleRefresh,
-          child: ResponsiveListView(
-            key: const PageStorageKey('users_tab_list'),
-            controller: _scrollController,
-            items: users,
-            isLoadingMore: state.isLoadingMore,
-            showDividers: true,
-            itemBuilder: (context, item) {
-              final user = item.user;
-              final isBookmarked = item.isBookmarked;
-              final badges = user.badgeCounts;
-
-              return UserTile(
-                avatarUrl: user.avatar,
-                name: user.name,
-                reputation: user.reputation,
-                badges: (badges.gold, badges.silver, badges.bronze),
-                bookmarked: isBookmarked,
-                onTap: () => widget.onUserTap(user.id),
-                onToggleBookmark: () => _handleToggleBookmark(user.id),
-              );
-            },
-          ),
         );
       },
     );
@@ -129,5 +119,9 @@ class _UsersTabState extends State<UsersTab>
 
   void _handleToggleBookmark(int id) {
     context.read<UsersCubit>().onToggleBookmark(id);
+  }
+
+  void _handleRetry() {
+    context.read<UsersCubit>().onLoadInit(force: true);
   }
 }

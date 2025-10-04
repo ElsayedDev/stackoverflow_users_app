@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stackoverflow_users_app/l10n/l10n.dart';
 
 /// A reusable widget to display an error message with a retry button.
 class UserReputationErrorStateView extends StatelessWidget {
@@ -30,7 +31,7 @@ class UserReputationErrorStateView extends StatelessWidget {
               if (onRetry != null)
                 ElevatedButton(
                   onPressed: onRetry,
-                  child: const Text('Retry'),
+                  child: Text(S.current.retry),
                 ),
             ],
           ),

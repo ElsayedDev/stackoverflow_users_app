@@ -3,6 +3,7 @@ import 'package:stackoverflow_users_app/core/routes/app_routes.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/models/user_reputation_screen_args.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/screens/home_screen.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/screens/user_reputation_screen.dart';
+import 'package:stackoverflow_users_app/l10n/l10n.dart';
 
 abstract class AppRouter {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -29,7 +30,7 @@ abstract class AppRouter {
 
   static Route<dynamic> _errorRoute(String message) => MaterialPageRoute<void>(
         builder: (_) => Scaffold(
-          appBar: AppBar(title: const Text('Navigation error')),
+          appBar: AppBar(title: Text(S.current.navigationError)),
           body: Center(
             child: Padding(
               padding: const EdgeInsets.all(16),

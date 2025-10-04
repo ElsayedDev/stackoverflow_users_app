@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stackoverflow_users_app/core/widgets/loading_center.dart';
-import 'package:stackoverflow_users_app/core/widgets/responsive_list_view.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/cubit/bookmarks/bookmarks_cubit.dart';
+import 'package:stackoverflow_users_app/l10n/l10n.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/empty_state_view.dart';
-import 'package:stackoverflow_users_app/features/users/presentation/widgets/user_tile.dart';
+import 'package:stackoverflow_users_app/features/users/presentation/widgets/bookmarked_users_tab_success_view.dart';
 
 class BookmarkedUsersTab extends StatefulWidget {
   final void Function(int id) onUserTap;
@@ -54,49 +54,36 @@ class _BookmarkedUsersTabState extends State<BookmarkedUsersTab>
       builder: (context, state) {
         final users = state.users;
 
+        // Show initial loading indicator
         if (state.showInitialLoader) {
           return const LoadingCenter();
         }
 
+        // Handle initial error state
         if (state.showInitialError) {
           return EmptyStateView(
-            message: state.error ?? 'Failed to load users.',
-            onRetry: () =>
-                context.read<BookmarksCubit>().onLoadInit(force: true),
+            message: state.error ?? S.current.failedToLoadUsers,
+            onRetry: _handleRetry,
             onRefresh: _handleRefresh,
           );
         }
 
+        // Show empty state if there are no bookmarked users
         if (users.isEmpty && !state.isLoading) {
           return EmptyStateView(
-            message: 'No users found.',
+            message: S.current.noUsersFound,
             onRefresh: _handleRefresh,
           );
         }
 
-        return RefreshIndicator(
+        // If we reach here, we have users to show
+        return BookmarkedUsersTabSuccessView(
+          controller: _scrollController,
+          users: users,
+          isLoadingMore: state.isLoadingMore,
+          onUserTap: widget.onUserTap,
+          onRemoveBookmark: _handleRemoveBookmark,
           onRefresh: _handleRefresh,
-          child: ResponsiveListView(
-            key: const PageStorageKey('bookmarked_users_tab_list'),
-            controller: _scrollController,
-            items: users,
-            isLoadingMore: state.isLoadingMore,
-            showDividers: true,
-            itemBuilder: (context, user) {
-              final badges = user.badgeCounts;
-
-              return UserTile(
-                key: ValueKey(user.id),
-                avatarUrl: user.avatar,
-                name: user.name,
-                reputation: user.reputation,
-                badges: (badges.gold, badges.silver, badges.bronze),
-                bookmarked: true,
-                onTap: () => widget.onUserTap(user.id),
-                onToggleBookmark: () => _handleRemoveBookmark(user.id),
-              );
-            },
-          ),
         );
       },
     );
@@ -132,5 +119,9 @@ class _BookmarkedUsersTabState extends State<BookmarkedUsersTab>
 
   void _handleRemoveBookmark(int id) {
     context.read<BookmarksCubit>().onToggleBookmark(id);
+  }
+
+  void _handleRetry() {
+    context.read<BookmarksCubit>().onLoadInit(force: true);
   }
 }

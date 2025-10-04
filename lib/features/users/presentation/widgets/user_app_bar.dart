@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/models/home_filter_option.dart';
 import 'package:stackoverflow_users_app/gen/assets.gen.dart';
+import 'package:stackoverflow_users_app/l10n/l10n.dart';
 
 class HomeAppBar extends AppBar {
   HomeAppBar({
@@ -17,7 +18,7 @@ class HomeAppBar extends AppBar {
               height: 24.r,
             ),
           ),
-          title: const Text('Stack Overflow Users'),
+          title: Text(S.current.appTitle),
           bottom: PreferredSize(
             preferredSize: Size.fromHeight(60.h),
             child: Padding(
@@ -25,15 +26,15 @@ class HomeAppBar extends AppBar {
               child: SizedBox(
                 width: double.infinity,
                 child: SegmentedButton<HomeFilterOption>(
-                  segments: const [
+                  segments: [
                     ButtonSegment<HomeFilterOption>(
                       value: HomeFilterOption.all,
-                      label: Text('All'),
+                      label: Text(S.current.all),
                       icon: Icon(Icons.group_outlined),
                     ),
                     ButtonSegment<HomeFilterOption>(
                       value: HomeFilterOption.bookmarked,
-                      label: Text('Bookmarked'),
+                      label: Text(S.current.bookmarked),
                       icon: Icon(Icons.bookmark_rounded),
                     ),
                   ],

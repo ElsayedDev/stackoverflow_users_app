@@ -9,6 +9,7 @@ import 'package:stackoverflow_users_app/features/users/presentation/widgets/repu
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/user_profile_header.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/user_reputation_app_bar.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/user_reputation_error_state_view.dart';
+import 'package:stackoverflow_users_app/l10n/l10n.dart';
 
 /// View = subscribes to Cubit state and builds UI.
 /// All UI helpers are extracted to widgets for clarity & reuse.
@@ -54,16 +55,16 @@ class _UserReputationViewState extends State<UserReputationView> {
 
             if (state.showInitialError) {
               return UserReputationErrorStateView(
-                message: state.error ?? 'Failed to load reputation history.',
+                message: state.error ?? S.current.failedToLoadReputation,
                 onRetry: _handleRetry,
               );
             }
 
             if (state.showEmptyState) {
               return EmptyStateView(
-                message: 'No reputation events yet.',
-                subMessage:
-                    'Check back later to see how ${state.user?.name ?? 'this user'} earns reputation.',
+                message: S.current.noReputationEvents,
+                subMessage: S.current
+                    .checkBackLater(state.user?.name ?? S.current.thisUser),
                 onRefresh: _handleRefresh,
               );
             }
@@ -123,8 +124,7 @@ class _UserReputationViewState extends State<UserReputationView> {
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
         ..showSnackBar(
-          const SnackBar(
-              content: Text('Unable to open the Stack Overflow post.')),
+          SnackBar(content: Text(S.current.unableToOpenPost)),
         );
     }
   }

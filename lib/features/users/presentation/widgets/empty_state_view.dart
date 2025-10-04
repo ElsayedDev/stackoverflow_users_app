@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:stackoverflow_users_app/l10n/l10n.dart';
 
 class EmptyStateView extends StatelessWidget {
   final String message;
@@ -15,7 +16,7 @@ class EmptyStateView extends StatelessWidget {
     this.subMessage,
     this.onRefresh,
     this.onRetry,
-    this.retryLabel = 'Retry',
+    this.retryLabel = 'Retry', // Default value
     this.illustration,
   });
 
@@ -53,7 +54,8 @@ class EmptyStateView extends StatelessWidget {
                 16.verticalSpace,
                 ElevatedButton(
                   onPressed: onRetry,
-                  child: Text(retryLabel),
+                  child: Text(
+                      retryLabel == 'Retry' ? S.current.retry : retryLabel),
                 ),
               ],
             ],

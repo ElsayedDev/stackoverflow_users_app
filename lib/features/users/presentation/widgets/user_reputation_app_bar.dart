@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/cubit/reputation/reputation_cubit.dart';
+import 'package:stackoverflow_users_app/l10n/l10n.dart';
 
 class UserReputationAppBar extends AppBar {
   UserReputationAppBar({super.key})
@@ -12,8 +13,12 @@ class UserReputationAppBar extends AppBar {
             builder: (_, tuple) {
               final (loading, name) = tuple;
               return Text(
-                  loading ? 'Loading user…' : (name ?? 'User Reputation'));
+                loading
+                    ? S.current.loadingUser
+                    : (name ?? S.current.userReputation),
+              );
             },
           ),
+          // add bookmark action
         );
 }

@@ -1,0 +1,26 @@
+{
+  "appTitle": "Stack Overflow Users",
+  "all": "All",
+  "bookmarked": "Bookmarked",
+  "retry": "Retry",
+  "navigationError": "Navigation error",
+  "loadingUser": "Loading user…",
+  "userReputation": "User Reputation",
+  "failedToLoadReputation": "Failed to load reputation history.",
+  "noReputationEvents": "No reputation events yet.",
+  "thisUser": "this user",
+  "checkBackLater": "Check back later to see how {name} earns reputation.",
+  "@checkBackLater": {
+    "description": "Shown in empty state, {name} is the user's display name or a fallback.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "unableToOpenPost": "Unable to open the Stack Overflow post.",
+  "addBookmark": "Add bookmark",
+  "removeBookmark": "Remove bookmark",
+  "failedToLoadUsers": "Failed to load users.",
+  "noUsersFound": "No users found."
+}
