@@ -16,13 +16,13 @@ abstract class Failure extends Equatable {
   /// Factory to map any Exception/Error to a Failure
   factory Failure.fromException(Object e) {
     if (e is DioException) {
-      return ServerFailure.fromStatusCode(
-          e.response?.statusCode ?? 500, e.message);
+      return ServerFailure.fromStatusCode(e.response?.statusCode ?? 500);
     }
 
     // if (e is CacheException) {
     //   return CacheFailure(e.message);
     // }
+
     return UnknownFailure(e.toString());
   }
 }
