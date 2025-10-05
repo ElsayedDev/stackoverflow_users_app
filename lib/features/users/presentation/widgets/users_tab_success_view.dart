@@ -8,7 +8,7 @@ class UsersTabSuccessView extends StatelessWidget {
   final List<UserUi> items;
   final bool isLoadingMore;
   final void Function(int id) onUserTap;
-  final void Function(int id) onToggleBookmark;
+  final void Function(int id, bool isBookmarked) onToggleBookmark;
   final Future<void> Function() onRefresh;
 
   const UsersTabSuccessView({
@@ -41,7 +41,8 @@ class UsersTabSuccessView extends StatelessWidget {
               badges: (badges.gold, badges.silver, badges.bronze),
               bookmarked: item.isBookmarked,
               onTap: () => onUserTap(user.id),
-              onToggleBookmark: () => onToggleBookmark(user.id),
+              onToggleBookmark: () =>
+                  onToggleBookmark(user.id, item.isBookmarked),
             );
           },
         ),

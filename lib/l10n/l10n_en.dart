@@ -55,4 +55,22 @@ class SEn extends S {
 
   @override
   String get noUsersFound => 'No users found.';
+
+  @override
+  String get bookmarkAdded => 'Added to bookmarks';
+
+  @override
+  String get bookmarkRemoved => 'Removed from bookmarks';
+
+  @override
+  String get confirmUnbookmarkTitle => 'Remove bookmark?';
+
+  @override
+  String get confirmUnbookmarkMessage => 'Are you sure you want to remove this user from bookmarks?';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get remove => 'Remove';
 }

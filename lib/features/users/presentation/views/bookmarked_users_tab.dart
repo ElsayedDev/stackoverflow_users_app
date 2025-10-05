@@ -6,6 +6,7 @@ import 'package:stackoverflow_users_app/features/users/presentation/cubit/bookma
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/empty_state_view.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/bookmarked_users_tab_success_view.dart';
 import 'package:stackoverflow_users_app/generated/l10n.dart';
+import 'package:stackoverflow_users_app/features/users/presentation/widgets/bookmark_feedback.dart';
 
 class BookmarkedUsersTab extends StatefulWidget {
   final void Function(int id) onUserTap;
@@ -119,7 +120,13 @@ class _BookmarkedUsersTabState extends State<BookmarkedUsersTab>
       await context.read<BookmarksCubit>().onRefresh();
 
   void _handleRemoveBookmark(int id) {
-    context.read<BookmarksCubit>().onToggleBookmark(id);
+    final cubit = context.read<BookmarksCubit>();
+    BookmarkFeedback.confirmUnbookmark(context).then((confirmed) async {
+      if (confirmed != true) return;
+      await cubit.onToggleBookmark(id);
+      if (!mounted) return;
+      BookmarkFeedback.showBookmarkRemovedSnack(context);
+    });
   }
 
   void _handleRetry() {

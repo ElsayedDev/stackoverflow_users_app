@@ -188,6 +188,42 @@ abstract class S {
   /// In en, this message translates to:
   /// **'No users found.'**
   String get noUsersFound;
+
+  /// No description provided for @bookmarkAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to bookmarks'**
+  String get bookmarkAdded;
+
+  /// No description provided for @bookmarkRemoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from bookmarks'**
+  String get bookmarkRemoved;
+
+  /// No description provided for @confirmUnbookmarkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove bookmark?'**
+  String get confirmUnbookmarkTitle;
+
+  /// No description provided for @confirmUnbookmarkMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to remove this user from bookmarks?'**
+  String get confirmUnbookmarkMessage;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

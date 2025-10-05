@@ -22,5 +22,11 @@
   "addBookmark": "Add bookmark",
   "removeBookmark": "Remove bookmark",
   "failedToLoadUsers": "Failed to load users.",
-  "noUsersFound": "No users found."
+  "noUsersFound": "No users found.",
+  "bookmarkAdded": "Added to bookmarks",
+  "bookmarkRemoved": "Removed from bookmarks",
+  "confirmUnbookmarkTitle": "Remove bookmark?",
+  "confirmUnbookmarkMessage": "Are you sure you want to remove this user from bookmarks?",
+  "cancel": "Cancel",
+  "remove": "Remove"
 }

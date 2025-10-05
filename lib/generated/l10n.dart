@@ -28,10 +28,9 @@ class S {
   static const AppLocalizationDelegate delegate = AppLocalizationDelegate();
 
   static Future<S> load(Locale locale) {
-    final name =
-        (locale.countryCode?.isEmpty ?? false)
-            ? locale.languageCode
-            : locale.toString();
+    final name = (locale.countryCode?.isEmpty ?? false)
+        ? locale.languageCode
+        : locale.toString();
     final localeName = Intl.canonicalizedLocale(name);
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
@@ -191,6 +190,66 @@ class S {
     return Intl.message(
       'No users found.',
       name: 'noUsersFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Added to bookmarks`
+  String get bookmarkAdded {
+    return Intl.message(
+      'Added to bookmarks',
+      name: 'bookmarkAdded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Removed from bookmarks`
+  String get bookmarkRemoved {
+    return Intl.message(
+      'Removed from bookmarks',
+      name: 'bookmarkRemoved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove bookmark?`
+  String get confirmUnbookmarkTitle {
+    return Intl.message(
+      'Remove bookmark?',
+      name: 'confirmUnbookmarkTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to remove this user from bookmarks?`
+  String get confirmUnbookmarkMessage {
+    return Intl.message(
+      'Are you sure you want to remove this user from bookmarks?',
+      name: 'confirmUnbookmarkMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove`
+  String get remove {
+    return Intl.message(
+      'Remove',
+      name: 'remove',
       desc: '',
       args: [],
     );

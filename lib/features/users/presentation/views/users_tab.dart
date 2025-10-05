@@ -6,6 +6,7 @@ import 'package:stackoverflow_users_app/features/users/presentation/widgets/empt
 import 'package:stackoverflow_users_app/generated/l10n.dart';
 
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/users_tab_success_view.dart';
+import 'package:stackoverflow_users_app/features/users/presentation/widgets/bookmark_feedback.dart';
 
 class UsersTab extends StatefulWidget {
   final void Function(int id) onUserTap;
@@ -118,8 +119,26 @@ class _UsersTabState extends State<UsersTab>
   Future<void> _handleRefresh() async =>
       await context.read<UsersCubit>().onRefresh();
 
-  void _handleToggleBookmark(int id) {
-    context.read<UsersCubit>().onToggleBookmark(id);
+  void _handleToggleBookmark(int id, bool isBookmarked) {
+    final cubit = context.read<UsersCubit>();
+
+    if (!isBookmarked) {
+      cubit.onToggleBookmark(id);
+      BookmarkFeedback.showBookmarkAddedSnack(context);
+      return;
+    }
+
+    // for remove bookmark
+    BookmarkFeedback.confirmUnbookmark(context).then(
+      (confirmed) {
+        if (confirmed != true) return;
+
+        cubit.onToggleBookmark(id);
+
+        if (!mounted) return;
+        BookmarkFeedback.showBookmarkRemovedSnack(context);
+      },
+    );
   }
 
   void _handleRetry() {
