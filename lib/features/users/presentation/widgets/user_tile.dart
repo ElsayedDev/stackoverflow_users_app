@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stackoverflow_users_app/core/widgets/animated_scaling_button.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/avatar_placeholder.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/badge_dot.dart';
-import 'package:stackoverflow_users_app/gen/colors.gen.dart';
+import 'package:stackoverflow_users_app/generated/colors.gen.dart';
 
 class UserTile extends StatelessWidget {
   final String avatarUrl;

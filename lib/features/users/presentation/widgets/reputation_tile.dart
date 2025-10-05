@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:stackoverflow_users_app/gen/colors.gen.dart';
+import 'package:stackoverflow_users_app/generated/colors.gen.dart';
 import 'package:stackoverflow_users_app/features/users/domain/entities/reputation_entity.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/extensions/reputation_history_type_extension.dart';
 

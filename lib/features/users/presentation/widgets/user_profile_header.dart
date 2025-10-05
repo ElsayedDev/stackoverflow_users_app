@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:stackoverflow_users_app/features/users/domain/entities/user_entity.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/avatar_placeholder.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/badge_dot.dart';
-import 'package:stackoverflow_users_app/gen/colors.gen.dart';
+import 'package:stackoverflow_users_app/generated/colors.gen.dart';
 
 class UserProfileHeader extends StatelessWidget {
   final UserEntity? user;

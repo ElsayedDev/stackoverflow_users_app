@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stackoverflow_users_app/gen/colors.gen.dart';
+import 'package:stackoverflow_users_app/generated/colors.gen.dart';
 
 @Deprecated('Use ColorName.* constants from lib/gen/colors.gen.dart instead.')
 abstract class SOFColors {
