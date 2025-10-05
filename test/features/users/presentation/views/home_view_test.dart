@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 import 'package:stackoverflow_users_app/core/di/service_locator.dart';
-import 'package:stackoverflow_users_app/features/users/data/repositories/mock_users_repository.dart';
+import '../../data/mock_users_repository.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/providers/home_providers.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/views/home_view.dart';
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:stackoverflow_users_app/features/users/data/repositories/mock_users_repository.dart';
+import '../data/mock_users_repository.dart';
 import 'package:stackoverflow_users_app/features/users/domain/usecases/get_reputation.dart';
 import 'package:stackoverflow_users_app/features/users/domain/usecases/get_user_by_id.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/cubit/reputation/reputation_cubit.dart';

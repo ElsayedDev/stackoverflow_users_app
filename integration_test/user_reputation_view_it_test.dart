@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:patrol/patrol.dart';
 import 'package:hive/hive.dart';
 import 'package:stackoverflow_users_app/core/di/service_locator.dart';
-import 'package:stackoverflow_users_app/features/users/data/repositories/mock_users_repository.dart';
+import '../test/features/users/data/mock_users_repository.dart';
 import 'package:stackoverflow_users_app/my_app.dart';
 
 void main() {
