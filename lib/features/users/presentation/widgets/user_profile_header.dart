@@ -1,11 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:stackoverflow_users_app/features/users/domain/entities/user_entity.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/avatar_placeholder.dart';
 import 'package:stackoverflow_users_app/features/users/presentation/widgets/badge_dot.dart';
 import 'package:stackoverflow_users_app/generated/colors.gen.dart';
 
+/// Renders a user profile header including avatar, name, reputation,
+/// optional location, and badge counts. Handles loading and error states.
 class UserProfileHeader extends StatelessWidget {
   final UserEntity? user;
   final bool isLoading;
@@ -19,43 +22,46 @@ class UserProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final padding = EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h);
     if (isLoading) {
       return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+        padding: padding,
         child: const LinearProgressIndicator(),
       );
     }
 
+    final textTheme = Theme.of(context).textTheme;
     if (user == null) {
-      if (error == null) {
-        return const SizedBox(height: 8);
+      final err = error?.trim();
+      if (err == null || err.isEmpty) {
+        return SizedBox(height: 8.h);
       }
 
-      final textTheme = Theme.of(context).textTheme;
       return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+        padding: padding,
         child: Text(
-          error!,
+          err,
           style: textTheme.bodyMedium?.copyWith(color: ColorName.sofDanger),
         ),
       );
     }
 
-    final textTheme = Theme.of(context).textTheme;
     final userData = user!;
     final badgeCounts = userData.badgeCounts;
+    final location = userData.location?.trim();
+    final rep = NumberFormat.decimalPattern().format(userData.reputation);
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+      padding: padding,
       child: Container(
         padding: EdgeInsets.all(16.r),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(color: ColorName.sofBorder),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.04),
+              color: Colors.black.withOpacity(0.04),
               offset: Offset(0, 4.h),
               blurRadius: 12.r,
             ),
@@ -63,6 +69,7 @@ class UserProfileHeader extends StatelessWidget {
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16.w,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12.r),
@@ -76,10 +83,10 @@ class UserProfileHeader extends StatelessWidget {
                     AvatarPlaceholder(size: 72.r),
               ),
             ),
-            SizedBox(width: 16.w),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 6.h,
                 children: [
                   Text(
                     userData.name,
@@ -88,15 +95,13 @@ class UserProfileHeader extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(height: 6.h),
                   Text(
-                    'Reputation: ${userData.reputation}',
+                    'Reputation: $rep',
                     style: textTheme.bodyMedium?.copyWith(
                       color: ColorName.sofMuted,
                     ),
                   ),
-                  if (userData.location != null) ...[
-                    SizedBox(height: 6.h),
+                  if (location != null && location.isNotEmpty) ...[
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -108,7 +113,7 @@ class UserProfileHeader extends StatelessWidget {
                         SizedBox(width: 4.w),
                         Expanded(
                           child: Text(
-                            userData.location!,
+                            location,
                             style: textTheme.bodySmall?.copyWith(
                               color: ColorName.sofMuted,
                             ),
@@ -119,19 +124,17 @@ class UserProfileHeader extends StatelessWidget {
                       ],
                     ),
                   ],
-                  SizedBox(height: 10.h),
                   Row(
+                    spacing: 8.w,
                     children: [
                       BadgeDot(
                         color: ColorName.sofBadgeGold,
                         count: badgeCounts.gold,
                       ),
-                      SizedBox(width: 8.w),
                       BadgeDot(
                         color: ColorName.sofBadgeSilver,
                         count: badgeCounts.silver,
                       ),
-                      SizedBox(width: 8.w),
                       BadgeDot(
                         color: ColorName.sofBadgeBronze,
                         count: badgeCounts.bronze,
