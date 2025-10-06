@@ -291,6 +291,7 @@ Ready for automated testing pipeline:
   - Skeleton loaders during initial fetch
   - Enhanced accessibility (screen readers, semantic labels)
   - Advanced filters (location, badges, reputation range)
+  - **Connectivity awareness:** show “No internet” banner and gracefully fallback to cached data
 * **Localization:**
   - Add more locales (Arabic, Spanish, etc.)
   - Runtime language switching without restart
